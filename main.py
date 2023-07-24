@@ -25,7 +25,8 @@ def save_json(data):
 animce = load_json()
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("https://wbijam.pl")
-anime = driver.execute_script('anime=[];for (const x of document.querySelector("#myTopnav > div:nth-child(4) > div").children){anime.push(x.href)};return anime;')
+anime = driver.execute_script("""anime=[];for (const x of document.evaluate(`//*[text()="Lista anime
+      "]`, document, null,XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.nextElementSibling.children){anime.push(x.href)};return anime;""")
 def get_cda(nazwa, anime, rel, seria, plik):
     driver.get(nazwa + "odtwarzacz-" + rel + ".html")
     time.sleep(0.2)
